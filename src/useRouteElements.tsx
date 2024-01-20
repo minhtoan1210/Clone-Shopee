@@ -16,14 +16,12 @@ export default function useRouteElements() {
       )
     },
     {
-      path: '/resgiter',
-      element: <RegisterLayout />,
-      children: [
-        {
-          path: '',
-          element: <Resgiter />
-        }
-      ]
+      path: '/register',
+      element: (
+        <RegisterLayout>
+          <Resgiter />
+        </RegisterLayout>
+      )
     }
   ])
   return routeElements
