@@ -9,20 +9,29 @@ interface Props {
   register: UseFormRegister<any>
   rules?: RegisterOptions
   name: string
-  errorMessage ?: string
+  errorMessage?: string
 }
 
-export default function Input({ type, className, placeholder, autoComplete, register, rules, name, errorMessage }: Props) {
+export default function Input({
+  type,
+  className,
+  placeholder,
+  autoComplete,
+  register,
+  rules,
+  name,
+  errorMessage
+}: Props) {
   return (
     <>
-    <input
-      type={type}
-      className={className}
-      placeholder={placeholder}
-      autoComplete={autoComplete}
-      {...register(name, rules)}
-    />
-    <div>{errorMessage}</div>
+      <input
+        type={type}
+        className={className}
+        placeholder={placeholder}
+        autoComplete={autoComplete}
+        {...register(name, rules)}
+      />
+      <div>{errorMessage}</div>
     </>
   )
 }
