@@ -9,6 +9,7 @@ import { useContext } from 'react'
 import { AppContext } from 'src/components/contexts/app.context'
 import { ErrorResponse } from 'src/type/utils.type'
 import { login } from 'src/api/auth.api'
+import Button from 'src/components/Button'
 
 type FormData = Omit<Schema, 'confirm_password'>
 const loginSchema = schema.omit(['confirm_password'])
@@ -28,6 +29,7 @@ export default function Login() {
   const loginMutation = useMutation({
     mutationFn: (body: Omit<FormData, 'confirm_password'>) => login(body)
   })
+
   const onSubmit = handleSubmit((data) => {
     loginMutation.mutate(data, {
       onSuccess: () => {
@@ -50,6 +52,7 @@ export default function Login() {
     })
   })
 
+  console.log("loginMutation", loginMutation)
   return (
     <div className='bg-orange'>
       <div className='container'>
@@ -75,12 +78,14 @@ export default function Login() {
                 autoComplete='on'
               />
               <div className='mt-3'>
-                <button
+                <Button
                   type='submit'
-                  className='w-full text-center py-4 px-2 uppercase bg-red-500 text-white text-sm hover:bg-red-600'
+                  className='w-full  py-4 px-2 uppercase bg-red-500 text-white text-sm hover:bg-red-600 flex justify-center items-center'
+                  isLoading={loginMutation.isPending}
+                  disabled={loginMutation.isPending}
                 >
                   Đăng nhập
-                </button>
+                </Button>
               </div>
               <div className='flex items-center justify-center mt-8'>
                 <span className='text-gray-400'>Bạn chưa có tài khoản?</span>
