@@ -1,13 +1,14 @@
+import path from 'src/constants/path'
+import { useContext } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
-import Login from './pages/Login'
 import RegisterLayout from './layouts/RegisterLayout'
+import Login from './pages/Login'
 import ProductList from './pages/ProductList'
-import MainLayout from './layouts/MainLayout/MainLayout'
+import Profile from './pages/Profile'
 import Register from './pages/Register'
 import { AppContext } from './components/contexts/app.context'
-import { useContext } from 'react'
+import MainLayout from './layouts/MainLayout/MainLayout'
 
-//Outlet dùng để truy xuất các thành phần con của chúng
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
   return isAuthenticated ? <Outlet /> : <Navigate to='/login' />
@@ -15,27 +16,18 @@ function ProtectedRoute() {
 
 function RejectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
+
   return !isAuthenticated ? <Outlet /> : <Navigate to='/' />
 }
+
 export default function useRouteElements() {
   const routeElements = useRoutes([
-    {
-      path: '/',
-      // nhớ xác định thành phần chín bằng
-      index: true,
-      element: (
-        <MainLayout>
-          <ProductList />
-        </MainLayout>
-      )
-    },
-
     {
       path: '',
       element: <RejectedRoute />,
       children: [
         {
-          path: 'login',
+          path: path.login,
           element: (
             <RegisterLayout>
               <Login />
@@ -43,7 +35,7 @@ export default function useRouteElements() {
           )
         },
         {
-          path: 'register',
+          path: path.register,
           element: (
             <RegisterLayout>
               <Register />
@@ -57,22 +49,23 @@ export default function useRouteElements() {
       element: <ProtectedRoute />,
       children: [
         {
-          path: 'login',
+          path: path.profile,
           element: (
-            <RegisterLayout>
-              <Login />
-            </RegisterLayout>
-          )
-        },
-        {
-          path: 'register',
-          element: (
-            <RegisterLayout>
-              <Register />
-            </RegisterLayout>
+            <MainLayout>
+              <Profile />
+            </MainLayout>
           )
         }
       ]
+    },
+    {
+      path: '',
+      index: true,
+      element: (
+        <MainLayout>
+          <ProductList />
+        </MainLayout>
+      )
     }
   ])
   return routeElements
