@@ -4,14 +4,17 @@ import RegisterLayout from './layouts/RegisterLayout'
 import ProductList from './pages/ProductList'
 import MainLayout from './layouts/MainLayout/MainLayout'
 import Register from './pages/Register'
+import { AppContext } from './components/contexts/app.context'
+import { useContext } from 'react'
 
-const isAuthenticated = false
 //Outlet dùng để truy xuất các thành phần con của chúng
 function ProtectedRoute() {
+  const { isAuthenticated } = useContext(AppContext)
   return isAuthenticated ? <Outlet /> : <Navigate to='/login' />
 }
 
 function RejectedRoute() {
+  const { isAuthenticated } = useContext(AppContext)
   return !isAuthenticated ? <Outlet /> : <Navigate to='/' />
 }
 export default function useRouteElements() {

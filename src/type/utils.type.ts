@@ -1,4 +1,8 @@
-export interface ResponseApi<T> {
+export interface SuccessResponse<Data> {
   message: string
-  data?: T
+  data: Data
+}
+export interface ErrorResponse<Data> {
+  message: string
+  data?: Data
 }

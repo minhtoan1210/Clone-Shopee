@@ -1,12 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
 import { omit } from 'lodash'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { registerAccount } from 'src/api/auth.api'
 import Input from 'src/components/Input'
-import { ResponseApi } from 'src/type/utils.type'
+import { AppContext } from 'src/components/contexts/app.context'
+import { ErrorResponse } from 'src/type/utils.type'
 import { schema, Schema } from 'src/utils/rules'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 
@@ -20,6 +21,8 @@ import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 type TypeRegister = Schema
 
 export default function Register() {
+  const { setIsAuthenticated } = useContext(AppContext)
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -33,54 +36,42 @@ export default function Register() {
   const registerAccountMutation = useMutation({
     mutationFn: (body: Omit<TypeRegister, 'confirm_password'>) => registerAccount(body)
   })
+
   // const rules = getRules(getValues)
-  const onSubmit = handleSubmit(
-    (data) => {
-      // nếu như trường hợp đúng thì sẽ nhảy vào trường hợp này
-      console.log('data', data)
-      const body = omit(data, ['confirm_password'])
-      registerAccountMutation.mutate(body, {
-        onSuccess: (data) => {
-          console.log(data)
-        },
-        onError: (error) => {
-          if (isAxiosUnprocessableEntityError<ResponseApi<Omit<TypeRegister, 'confirm_password'>>>(error)) {
-            const formError = error.response?.data.data
-            {
-              if (formError) {
-                Object.keys(formError).forEach((key) => {
-                  setError(key as keyof Omit<TypeRegister, 'confirm_password'>, {
-                    message: formError[key as keyof Omit<TypeRegister, 'confirm_password'>],
-                    type: 'Server'
-                  })
-                })
-
-                // if (formError?.email) {
-                //   setError('email', {
-                //     message: formError.email,
-                //     type: 'Server'
-                //   })
-                // }
-
-                // if (formError?.password) {
-                //   setError('password', {
-                //     message: formError.password,
-                //     type: 'Server'
-                //   })
-                // }
-              }
-            }
-            console.log('error', error)
+  const onSubmit = handleSubmit((data) => {
+    const body = omit(data, ['confirm_password'])
+    registerAccountMutation.mutate(body, {
+      onSuccess: () => {
+        setIsAuthenticated(true)
+        navigate('/')
+      },
+      onError: (error) => {
+        if (isAxiosUnprocessableEntityError<ErrorResponse<Omit<TypeRegister, 'confirm_password'>>>(error)) {
+          const formError = error.response?.data.data
+          if (formError) {
+            Object.keys(formError).forEach((key) => {
+              setError(key as keyof Omit<TypeRegister, 'confirm_password'>, {
+                message: formError[key as keyof Omit<TypeRegister, 'confirm_password'>],
+                type: 'Server'
+              })
+            })
           }
+          // if (formError?.email) {
+          //   setError('email', {
+          //     message: formError.email,
+          //     type: 'Server'
+          //   })
+          // }
+          // if (formError?.password) {
+          //   setError('password', {
+          //     message: formError.password,
+          //     type: 'Server'
+          //   })
+          // }
         }
-      })
-    },
-    () => {
-      // nó sẽ kiểm tra tất cả giá trị nếu có 1 trường hợp sai cũng nhảy vào đây
-      const password = getValues('password')
-      console.log('password', password)
-    }
-  )
+      }
+    })
+  })
 
   //watch trong useForm như là onChange dùng để lắng nghe
   // const email = watch('email')
