@@ -4,12 +4,13 @@ import { omit } from 'lodash'
 import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { registerAccount } from 'src/api/auth.api'
+import authApi from 'src/api/auth.api'
 import Input from 'src/components/Input'
 import { AppContext } from 'src/components/contexts/app.context'
 import { ErrorResponse } from 'src/type/utils.type'
 import { schema, Schema } from 'src/utils/rules'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
+import path from 'src/constants/path'
 
 // Đây là kiểu dữ liệu khi không xài thằng Yup
 // interface TypeRegister {
@@ -34,7 +35,7 @@ export default function Register() {
   })
 
   const registerAccountMutation = useMutation({
-    mutationFn: (body: Omit<TypeRegister, 'confirm_password'>) => registerAccount(body)
+    mutationFn: (body: Omit<TypeRegister, 'confirm_password'>) => authApi.registerAccount(body)
   })
 
   // const rules = getRules(getValues)
@@ -129,7 +130,7 @@ export default function Register() {
               </div>
               <div className='mt-8 flex items-center justify-center'>
                 <span className='text-gray-400'>Bạn đã có tài khoản?</span>
-                <Link className='ml-1 text-red-400' to='/login'>
+                <Link className='ml-1 text-red-400' to={path.login}>
                   Đăng nhập
                 </Link>
               </div>

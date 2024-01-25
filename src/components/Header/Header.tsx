@@ -3,13 +3,13 @@ import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import Popover from '../Popover'
 import { AppContext } from '../contexts/app.context'
-import { logout } from 'src/api/auth.api'
 import path from 'src/constants/path'
+import authApi from 'src/api/auth.api'
 
 export default function Header() {
   const { setIsAuthenticated, isAuthenticated, setProfile, profile } = useContext(AppContext)
   const logoutMutation = useMutation({
-    mutationFn: logout,
+    mutationFn: authApi.logout,
     onSuccess: () => {
       setIsAuthenticated(false)
       setProfile(null)

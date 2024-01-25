@@ -8,8 +8,8 @@ import Input from 'src/components/Input'
 import { useContext } from 'react'
 import { AppContext } from 'src/components/contexts/app.context'
 import { ErrorResponse } from 'src/type/utils.type'
-import { login } from 'src/api/auth.api'
 import Button from 'src/components/Button'
+import authApi from 'src/api/auth.api'
 
 type FormData = Omit<Schema, 'confirm_password'>
 const loginSchema = schema.omit(['confirm_password'])
@@ -27,7 +27,7 @@ export default function Login() {
   })
 
   const loginMutation = useMutation({
-    mutationFn: (body: Omit<FormData, 'confirm_password'>) => login(body)
+    mutationFn: (body: Omit<FormData, 'confirm_password'>) => authApi.login(body)
   })
 
   const onSubmit = handleSubmit((data) => {
