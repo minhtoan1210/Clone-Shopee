@@ -4,7 +4,7 @@ import { SuccessResponse } from 'src/type/utils.type'
 import http from 'src/utils/http'
 
 const url = 'products'
-const ProductApi = {
+const productApi = {
   getProducts(params: ProductListConfig) {
     return http.get<SuccessResponse<ProductList>>(url, {
       params
@@ -16,4 +16,4 @@ const ProductApi = {
   }
 }
 
-export default ProductApi
+export default productApi
