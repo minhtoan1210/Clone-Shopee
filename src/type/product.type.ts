@@ -36,5 +36,6 @@ export interface ProductListConfig {
   rating_filter?: number | string
   price_max?: number | string
   price_min?: number | string
+  category?: string
   name?: string
 }

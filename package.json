@@ -21,6 +21,7 @@
     "@tanstack/react-query-devtools": "^5.17.18",
     "@types/lodash": "^4.14.202",
     "@vitejs/plugin-react": "^4.2.1",
+    "antd": "^5.13.3",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.5",
     "classnames": "^2.5.1",
