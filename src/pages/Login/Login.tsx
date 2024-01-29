@@ -11,8 +11,12 @@ import { ErrorResponse } from 'src/type/utils.type'
 import Button from 'src/components/Button'
 import authApi from 'src/api/auth.api'
 
-type FormData = Omit<Schema, 'confirm_password'>
-const loginSchema = schema.omit(['confirm_password'])
+// Trong trường hợp này thì nên xài Pick hơn là Omit vì nếu như Schema mà lớn thì mình Pick cho lẹ
+// type FormData = Omit<Schema, 'confirm_password'>
+// const loginSchema = schema.omit(['confirm_password'])
+
+type FormData = Pick<Schema, 'email' | 'password'>
+const loginSchema = schema.pick(['email', 'password'])
 
 export default function Login() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
@@ -53,7 +57,7 @@ export default function Login() {
     })
   })
 
-  console.log("loginMutation", loginMutation)
+  console.log('loginMutation', loginMutation)
   return (
     <div className='bg-orange'>
       <div className='container'>
