@@ -25,6 +25,8 @@ const InputNumber = forwardRef<HTMLInputElement, Props>(function InputNumberInne
       onChange(event)
     }
   }
+
+  console.log("rest", rest)
   return (
     <div className={className}>
       <input className={classNameInput} onChange={(event) => handleChange(event)} {...rest} ref={ref} />
