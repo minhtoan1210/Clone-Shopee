@@ -65,7 +65,8 @@ export default function ProductDetail() {
                 />
               </div>
               <div className='relative mt-4 grid grid-cols-5 gap-1'>
-                <button className='absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white'>
+                <button className='absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white'
+                onClick={prev}>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     fill='none'
