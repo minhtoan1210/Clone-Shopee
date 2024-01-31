@@ -1,7 +1,6 @@
 import useQueryParams from 'src/hooks/useQueryParams'
-import AsideFilter from './AsideFilter'
-import Product from './Product'
-import SortProductList from './SortProductList'
+import AsideFilter from './components/AsideFilter'
+import Product from './components/Product'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import Pagination from 'src/components/Pagination'
 import { ProductListConfig } from 'src/type/product.type'
@@ -11,6 +10,7 @@ import type { PaginationProps } from 'antd'
 // import { Pagination } from 'antd'
 import { Navigate, createSearchParams, useNavigate } from 'react-router-dom'
 import categoryApi from 'src/api/category.api'
+import SortProductList from './components/SortProductList'
 
 export type QueryConfig = {
   [key in keyof ProductListConfig]: string
