@@ -1,13 +1,13 @@
 import { forwardRef, InputHTMLAttributes } from 'react'
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
   classNameInput?: string
   classNameError?: string
 }
 
 // do mình kế thừa từ typrscrip InputHTMLAttributes nên ko cần phải khai báo những thằng như type placeholder autoComplete vì nó đã có trong typescrip InputHTMLAttributes nên mình có thể lấy nó thong qua thằng rest
-const InputNumber = forwardRef<HTMLInputElement, Props>(function InputNumberInner(
+const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function InputNumberInner(
   {
     errorMessage,
     className,
