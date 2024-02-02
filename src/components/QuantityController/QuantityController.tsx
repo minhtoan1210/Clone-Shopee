@@ -19,7 +19,6 @@ export default function QuantityController({
 }: Props) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let _value = Number(event.target.value)
-    console.log("_value", _value)
     if (max !== undefined && _value > max) {
       _value = max
     } else if (_value < 1) {
