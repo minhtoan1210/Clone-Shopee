@@ -3,7 +3,6 @@ import { createSearchParams, Link, useNavigate } from 'react-router-dom'
 import Button from 'src/components/Button'
 import Input from 'src/components/Input'
 import path from 'src/constants/path'
-import { QueryConfig } from '../../ProductList'
 import { Category } from 'src/type/category'
 import { NoUndefinedField } from 'src/type/utils.type'
 import { Schema, schema } from 'src/utils/rules'
@@ -12,6 +11,8 @@ import { Controller, useForm } from 'react-hook-form'
 import InputNumber from 'src/components/InputNumber'
 import RatingStars from '../RatingStars'
 import { omit } from 'lodash'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
+import InputV2 from 'src/components/InputV2'
 
 interface Props {
   queryConfig: QueryConfig
@@ -62,8 +63,8 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
       pathname: path.home,
       search: createSearchParams(omit(queryConfig, ['price_min', 'price_max', 'rating_filter', 'category'])).toString()
     })
-    resetField("price_max")
-    resetField("price_min")
+    resetField('price_max')
+    resetField('price_min')
   }
 
   return (
@@ -165,6 +166,18 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
                 )
               }}
             />
+            {/* <InputV2
+              control={control}
+              name='price_min'
+              type='number'
+              className='grow'
+              placeholder='₫ TỪ'
+              classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm'
+              classNameError='hidden'
+              onChange={() => {
+                trigger('price_max')
+              }}
+            /> */}
             <div className='mx-2 mt-2 shrink-0'>-</div>
             <Controller
               control={control}

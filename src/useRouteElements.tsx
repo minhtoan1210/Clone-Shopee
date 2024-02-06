@@ -9,6 +9,7 @@ import Register from './pages/Register'
 import { AppContext } from './components/contexts/app.context'
 import MainLayout from './layouts/MainLayout/MainLayout'
 import ProductDetail from './pages/ProductDetail'
+import Cart from './pages/Cart'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
@@ -73,6 +74,14 @@ export default function useRouteElements() {
       element: (
         <MainLayout>
           <ProductList />
+        </MainLayout>
+      )
+    },
+    {
+      path: path.cart,
+      element: (
+        <MainLayout>
+          <Cart />
         </MainLayout>
       )
     }

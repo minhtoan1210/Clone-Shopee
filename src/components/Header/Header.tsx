@@ -14,6 +14,7 @@ import { formatCurrency } from 'src/utils/utils'
 import { AppContext } from '../contexts/app.context'
 import authApi from 'src/api/auth.api'
 import purchaseApi from 'src/api/purchase.api'
+import { queryClient } from 'src/main'
 
 type FormData = Pick<Schema, 'name'>
 
@@ -34,6 +35,8 @@ export default function Header() {
     onSuccess: () => {
       setIsAuthenticated(false)
       setProfile(null)
+      // xóa đi cache data của react-Query
+      queryClient.removeQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
     }
   })
 
@@ -44,7 +47,8 @@ export default function Header() {
 
   const { data: purchasesInCartData } = useQuery({
     queryKey: ['purchases', { status: purchasesStatus.inCart }],
-    queryFn: () => purchaseApi.getPurchases({ status: purchasesStatus.inCart })
+    queryFn: () => purchaseApi.getPurchases({ status: purchasesStatus.inCart }),
+    enabled: isAuthenticated
   })
 
   const purchasesInCart = purchasesInCartData?.data.data
@@ -226,9 +230,12 @@ export default function Header() {
                           {purchasesInCart.length > MAX_PURCHASES ? purchasesInCart.length - MAX_PURCHASES : ''} Thêm
                           hàng vào giỏ
                         </div>
-                        <button className='rounded-sm bg-orange px-4 py-2 capitalize text-white hover:bg-opacity-90'>
+                        <Link
+                          to={path.cart}
+                          className='rounded-sm bg-orange px-4 py-2 capitalize text-white hover:bg-opacity-90'
+                        >
                           Xem giỏ hàng
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   ) : (
