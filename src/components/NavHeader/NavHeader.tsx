@@ -6,7 +6,7 @@ import { purchasesStatus } from 'src/constants/purchase'
 import { queryClient } from 'src/main'
 import Popover from '../Popover'
 import authApi from 'src/api/auth.api'
-import { AppContext } from '../contexts/app.context'
+import { AppContext } from '../../contexts/app.context'
 
 export default function NavHeader() {
   const { setIsAuthenticated, isAuthenticated, setProfile, profile } = useContext(AppContext)
