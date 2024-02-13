@@ -1,12 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import Button from 'src/components/Button'
 import Input from 'src/components/Input'
 import InputNumber from 'src/components/InputNumber'
+import { AppContext } from 'src/contexts/app.context'
+import { setProfileToLS } from 'src/utils/auth'
+import { userSchema, UserSchema } from 'src/utils/rules'
 import DateSelect from '../../components/DateSelect'
-import { UserSchema, userSchema } from 'src/utils/rules'
 import userApi from 'src/api/user.api'
 
 type FormData = Pick<UserSchema, 'name' | 'address' | 'phone' | 'date_of_birth' | 'avatar'>
@@ -14,12 +17,24 @@ type FormData = Pick<UserSchema, 'name' | 'address' | 'phone' | 'date_of_birth' 
 const profileSchema = userSchema.pick(['name', 'address', 'phone', 'date_of_birth', 'avatar'])
 
 export default function Profile() {
-  const { data: profileData } = useQuery({
+  const { setProfile } = useContext(AppContext)
+  const { data: profileData, refetch } = useQuery({
     queryKey: ['profile'],
     queryFn: userApi.getProfile
   })
   const profile = profileData?.data.data
-  // const updateProfileMutation = useMutation(userApi.updateProfile)
+
+  const updateProfileMutation = useMutation({
+    mutationFn: userApi.updateProfile,
+    onSuccess: (res) => {
+      console.log("res", res)
+      setProfile(res.data.data)
+      setProfileToLS(res.data.data)
+      refetch()
+      toast.success(res.data.message)
+    }
+  })
+
   const {
     register,
     control,
@@ -50,8 +65,7 @@ export default function Profile() {
   }, [profile, setValue])
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data)
-    // await updateProfileMutation.mutateAsync({})
+    updateProfileMutation.mutate({ ...data, date_of_birth: data.date_of_birth?.toISOString() })
   })
 
   const value = watch()
@@ -125,7 +139,7 @@ export default function Profile() {
             <div className='truncate pt-3 capitalize sm:w-[20%] sm:text-right' />
             <div className='sm:w-[80%] sm:pl-5'>
               <Button
-                className='flex h-9 items-center bg-orange px-5 text-center text-sm text-white hover:bg-orange/80'
+                className='flex h-9 items-center rounded-sm bg-orange px-5 text-center text-sm text-white hover:bg-orange/80'
                 type='submit'
               >
                 Lưu
