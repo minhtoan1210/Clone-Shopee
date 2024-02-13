@@ -4,7 +4,7 @@ import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import RegisterLayout from './layouts/RegisterLayout'
 import Login from './pages/Login'
 import ProductList from './pages/ProductList'
-import Profile from './pages/Profile'
+import Profile from './pages/User/pages/Profile'
 import Register from './pages/Register'
 import { AppContext } from './contexts/app.context'
 import MainLayout from './layouts/MainLayout/MainLayout'
@@ -13,6 +13,7 @@ import Cart from './pages/Cart'
 import CartLayout from './layouts/CartLayout'
 import UserLayout from './pages/User/layouts/UserLayout'
 import ChangePassword from './pages/User/pages/ChangePassword'
+import HistoryPurchase from './pages/User/pages/HistoryPurchase'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
@@ -76,6 +77,10 @@ export default function useRouteElements() {
             {
               path: path.changePassword,
               element: <ChangePassword />
+            },
+            {
+              path: path.hitoryPurchase,
+              element: <HistoryPurchase />
             }
           ]
         }
