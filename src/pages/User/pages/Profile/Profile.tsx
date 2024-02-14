@@ -169,6 +169,8 @@ export default function Profile() {
     setFile(file)
   }
 
+  
+
   // console.log(value, errors)
 
   return (
