@@ -13,7 +13,6 @@ import DateSelect from '../../components/DateSelect'
 import userApi from 'src/api/user.api'
 import { getAvatarUrl, isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/type/utils.type'
-import config from 'src/constants/config'
 import InputFile from 'src/components/InputFile'
 
 function Info() {
