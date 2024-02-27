@@ -94,6 +94,7 @@ export default function Register() {
                 name='email'
                 type='email'
                 className='mt-2'
+                classNameEye='absolute right-[5px] h-5 w-5 cursor-pointer top-[12px]'
                 placeholder='email'
                 register={register}
                 errorMessage={errors.email?.message}
@@ -104,6 +105,7 @@ export default function Register() {
                 name='password'
                 type='password'
                 className='mt-2'
+                classNameEye='absolute right-[5px] h-5 w-5 cursor-pointer top-[12px]'
                 placeholder='password'
                 autoComplete='on'
                 register={register}
