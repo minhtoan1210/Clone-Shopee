@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
-import { omit, String } from 'lodash'
+import omit from 'lodash/omit'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import userApi from 'src/api/user.api'
@@ -50,7 +51,7 @@ export default function ChangePassword() {
   })
 
   const onSubmit = handleSubmit((data) => {
-    console.log("data", omit(data, ['confirm_password']))
+    console.log('data', omit(data, ['confirm_password']))
     updateProfileMutation.mutate(omit(data, ['confirm_password']) as any)
   })
 

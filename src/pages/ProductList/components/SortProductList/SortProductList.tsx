@@ -1,9 +1,9 @@
 import classNames from 'classnames'
 import { sortBy, order as orderConstant } from 'src/constants/product'
-import { QueryConfig } from '../ProductList'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { createSearchParams, Link, useNavigate } from 'react-router-dom'
 import path from 'src/constants/path'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import { ProductListConfig } from 'src/type/product.type'
 interface Props {
   queryConfig: QueryConfig
@@ -15,7 +15,7 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
   const { sort_by = sortBy.createdAt, order } = queryConfig
   const navigate = useNavigate()
 
-  console.log("queryConfig", queryConfig)
+  console.log('queryConfig', queryConfig)
 
   const isActiveSortBy = (sortByValue: Exclude<ProductListConfig['sort_by'], undefined>) => {
     return sort_by === sortByValue

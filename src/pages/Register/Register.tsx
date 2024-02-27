@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
@@ -19,7 +19,6 @@ import path from 'src/constants/path'
 //   confirm_password: number
 // }
 
-
 type TypeRegister = Pick<Schema, 'email' | 'password' | 'confirm_password'>
 const registerSchema = schema.pick(['email', 'password', 'confirm_password'])
 export default function Register() {
@@ -28,7 +27,6 @@ export default function Register() {
   const {
     register,
     handleSubmit,
-    getValues,
     setError,
     formState: { errors }
   } = useForm<TypeRegister>({
